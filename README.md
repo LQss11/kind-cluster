@@ -24,13 +24,7 @@ That container must belong to the same network of the cluster created
 ### Copy kubeconfig
 you can run kubectl from ur host machine on the created cluster by importing kubeconfig:
 ```sh
-export HOST=localhost
-export OLD_HOST=$(cat /root/.kube/config  | grep server | cut -d/ -f3 | cut -d: -f1)
-export PORT=$(docker ps | grep $(echo $OLD_HOST) | awk '{print $10}' | cut -d: -f2 | cut -d- -f1)
-cp /root/.kube/config /root/.kube/kindconfig
-sed -i "s/$OLD_HOST/$HOST/g;s/6443/$PORT/g" /root/.kube/kindconfig
-
-
+docker exec -it cluster-generator bash -c "./convert-kubeconfig.sh"
 docker cp cluster-generator:/root/.kube/kindconfig ./
 kubectl get all --kubeconfig ./kindconfig
 ```

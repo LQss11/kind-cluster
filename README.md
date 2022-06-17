@@ -20,12 +20,23 @@ docker exec -it cluster-generator bash -c "./cluster-setup.sh"
 docker exec -it cluster-generator bash -c "kind delete cluster --name k8s-cluster"
 ```
 ## Run kubectl commands from cluster generator
-That container must belong to the same network of the cluster created
+That container must belong to the same network of the cluster created:
+```sh
+docker network connect kind cluster-generator
+```
 ### Copy kubeconfig
 you can run kubectl from ur host machine on the created cluster by importing kubeconfig:
 ```sh
 docker exec -it cluster-generator bash -c "./convert-kubeconfig.sh"
 docker cp cluster-generator:/root/.kube/kindconfig ./
 kubectl get all --kubeconfig ./kindconfig
+```
+
+### Cluster management
+You can run commands and check files of cluster by getting in the master node:
+```sh
+# Get the name of master
+docker exec -it cluster-generator bash -c "cat /root/.kube/config  | grep server | cut -d/ -f3 | cut -d: -f1"
+docker exec -it <master-container> bash 
 ```
 

@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  cluster-generator:
+    build: .
+    image: cluster-generator 
+    container_name: cluster-generator
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    tty: true

@@ -20,6 +20,9 @@ RUN wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_RELEAS
 
 WORKDIR /root/.kind
 COPY cluster-setup.sh /root/.kind/cluster-setup.sh
+COPY convert-kubeconfig.sh /root/.kind/convert-kubeconfig.sh
+
 RUN chmod 777 /root/.kind/cluster-setup.sh
+RUN chmod 777 /root/.kind/convert-kubeconfig.sh
 
 CMD ["bash"]

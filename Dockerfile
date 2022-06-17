@@ -1,5 +1,5 @@
 # Download Kubectl binaries
-FROM alpine AS kubectl-kind
+FROM ubuntu:20.04
 ARG ARCH=amd64
 
 WORKDIR /usr/local/bin
@@ -14,6 +14,6 @@ ARG KIND_RELEASE=v0.11.1
 RUN wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_RELEASE}/kind-linux-${ARCH} -O kind \
     && chmod +x kind
 
-RUN apk add bash curl
+RUN apt-get update && apt-get install -y add bash curl
 WORKDIR /root/.kind
 COPY  cluster-setup.sh /root/.kind/cluster-setup.sh

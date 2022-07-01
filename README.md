@@ -1,5 +1,5 @@
 # kind-cluster
-Create and Test on a kubernetes cluster with kind
+Create and Test on a Kubernetes cluster with kind
 # Quick start
 To create a cluster you can either run the following script making sure you have kubectl and go installed on your machine, code of installation is available in the **Dockerfile**, then you can run the following:
 ```sh
@@ -7,7 +7,7 @@ To create a cluster you can either run the following script making sure you have
 ```
 # Docker-compose
 ## Create cluster
-If you want to start and manage your cluster (useful for windows users) you can run the following using docker compose:
+If you want to start and manage your cluster (useful for Windows users) you can run the following using docker-compose:
 ```sh
 docker-compose up -d --build 
 ```

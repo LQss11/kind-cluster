@@ -1,8 +1,9 @@
 # Download Kubectl binaries
-FROM ubuntu:20.04
+FROM docker:dind
 ARG ARCH=amd64
 
-RUN apt-get update && apt-get install -y  bash curl wget iputils-ping net-tools
+RUN apk add bash curl wget iputils-ping net-tools kubectx helm
+# RUN apt-get update && apt-get install -y  bash curl wget iputils-ping net-tools
 
 
 
@@ -14,7 +15,7 @@ RUN wget https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_
 
 # Download Kind release
 # https://github.com/kubernetes-sigs/kind/releases 
-ARG KIND_RELEASE=v0.11.1
+ARG KIND_RELEASE=v0.20.0
 RUN wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_RELEASE}/kind-linux-${ARCH} -O kind \
     && chmod +x kind
 
@@ -25,4 +26,4 @@ COPY convert-kubeconfig.sh /root/.kind/convert-kubeconfig.sh
 RUN chmod 777 /root/.kind/cluster-setup.sh
 RUN chmod 777 /root/.kind/convert-kubeconfig.sh
 
-CMD ["bash"]
+# CMD ["bash"]

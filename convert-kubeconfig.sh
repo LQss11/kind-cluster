@@ -1,6 +1,6 @@
 #!/bin/bash
 export HOST=localhost
-export OLD_HOST=$(cat /root/.kube/config  | grep server | cut -d/ -f3 | cut -d: -f1)
-export PORT=$(docker ps | grep $(echo $OLD_HOST) | awk '{print $10}' | cut -d: -f2 | cut -d- -f1)
-cp /root/.kube/config /root/.kube/kindconfig
-sed -i "s/$OLD_HOST/$HOST/g;s/6443/$PORT/g" /root/.kube/kindconfig
+cp /root/.kube/config /root/.kube/oldconfig
+docker cp k8s-cluster-control-plane:/etc/kubernetes/admin.conf /root/.kube/config
+PORT=$(docker inspect --format='{{(index (index .NetworkSettings.Ports "6443/tcp") 0).HostPort}}' k8s-cluster-control-plane)
+sed -i "s#server:.*#server: https://$HOST:$PORT#g" /root/.kube/config

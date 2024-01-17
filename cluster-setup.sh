@@ -6,8 +6,10 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 EOF
+
 # Regular exp not between 1 and 9
 re='^[1-9]+$'
+
 # Select how many manager and worker nodes
 # to be in the kind cluster
 # 1 control-plane and 1 worker for minimal test
@@ -17,7 +19,28 @@ while read -p "How many manager nodes do you need in the cluster?:" manager; do
         exit 1
     fi
     for i in $(seq 1 $manager); do
-        echo - role: control-plane >>kind-config.yaml
+        # Ask for the comma-separated list of ports to be opened
+        read -p "Enter the comma-separated list of ports to open for control-plane node $i (leave blank for no extra ports): " ports
+        # Validate the input ports
+        if [[ $ports =~ ^[1-9][0-9]*(,[1-9][0-9]*)*$ ]]; then
+            IFS=',' read -ra portArray <<< "$ports"
+            cat >>kind-config.yaml <<EOF
+- role: control-plane
+  extraPortMappings:
+EOF
+            for port in "${portArray[@]}"; do
+                cat >>kind-config.yaml <<EOF
+  - containerPort: $port
+    hostPort: $port
+    listenAddress: "0.0.0.0"
+    protocol: tcp
+EOF
+            done
+        else
+            cat >>kind-config.yaml <<EOF
+- role: control-plane
+EOF
+        fi
     done
     break
 done

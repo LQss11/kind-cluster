@@ -7,11 +7,13 @@ docker compose up --build -d
 # Export kubeconfig to host
 docker cp cluster-generator:/root/.kube/config .
 # Export env vars (windows)
-$env:KUBECONFIG="./config/config"
+$env:KUBECONFIG="$PWD/config/config"
 # Export env vars (linux)
-KUBECONFIG="./config/config"
+KUBECONFIG="$(pwd)/config/config"
 
 kubectl get nodes -o wide
+
+# Pull image inside cluster
 docker exec -it cluster-generator bash -c "docker pull nginx && kind load docker-image --name k8s-cluster nginx" 
 kubectl apply -f example
 kubectl port-forward --namespace default deploy/nginx 3000:80 --address 0.0.0.0

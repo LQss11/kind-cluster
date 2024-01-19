@@ -46,7 +46,7 @@ create_kind_config() {
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 networking:
-  apiServerAddress: 0.0.0.0
+  apiServerAddress: ${APISERVER_URL}
   apiServerPort: ${APISERVER_PORT}
 nodes:
 EOF
@@ -124,7 +124,7 @@ log "Cluster config template created successfully."
 echo "############################################################################"
 echo "$MANAGER_NODES control-plane and $WORKER_NODES worker nodes will be joining the cluster"
 echo "############################################################################"
-
+rm -rf /root/.kube/*
 # Create the cluster
 log "Started Creating cluster."
 kind create cluster --name k8s-cluster --config kind-config.yaml

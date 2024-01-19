@@ -7,7 +7,7 @@ docker compose up --build -d
 docker exec -it cluster-generator bash -c "./cluster-setup.sh"
 docker exec -it cluster-generator bash -c "./convert-kubeconfig.sh"
 docker exec -it cluster-generator bash
-kubectl get all
+kubectl get nodes -o wide
 
 # Test example
 helm repo add groundcover https://helm.groundcover.com/

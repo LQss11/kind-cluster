@@ -19,16 +19,18 @@ while read -p "How many manager nodes do you need in the cluster?:" manager; do
         exit 1
     fi
     for i in $(seq 1 $manager); do
-        # Ask for the comma-separated list of ports to be opened
-        read -p "Enter the comma-separated list of ports to open for control-plane node $i (leave blank for no extra ports): " ports
+        # Ask for the range of ports to be opened
+        read -p "Enter the range of ports to open for control-plane node $i (e.g., 3000-4000, leave blank for no extra ports): " portRange
         # Validate the input ports
-        if [[ $ports =~ ^[1-9][0-9]*(,[1-9][0-9]*)*$ ]]; then
-            IFS=',' read -ra portArray <<< "$ports"
+        if [[ $portRange =~ ^[1-9][0-9]*-[1-9][0-9]*$ ]]; then
+            IFS='-' read -ra portRangeParts <<< "$portRange"
+            startPort=${portRangeParts[0]}
+            endPort=${portRangeParts[1]}
             cat >>kind-config.yaml <<EOF
 - role: control-plane
   extraPortMappings:
 EOF
-            for port in "${portArray[@]}"; do
+            for port in $(seq $startPort $endPort); do
                 cat >>kind-config.yaml <<EOF
   - containerPort: $port
     hostPort: $port
@@ -70,4 +72,3 @@ if [[ $manager == 1 ]]; then
 else
     kubectl config set clusters.kind-k8s-cluster.server https://k8s-cluster-external-load-balancer:6443
 fi
-

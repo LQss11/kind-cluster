@@ -19,11 +19,10 @@ ARG KIND_RELEASE=v0.20.0
 RUN wget https://github.com/kubernetes-sigs/kind/releases/download/${KIND_RELEASE}/kind-linux-${ARCH} -O kind \
     && chmod +x kind
 
-WORKDIR /root/.kind
-COPY cluster-setup.sh /root/.kind/cluster-setup.sh
-COPY convert-kubeconfig.sh /root/.kind/convert-kubeconfig.sh
+ARG WORKDIR
+WORKDIR ${WORKDIR}
+COPY . .
 
-RUN chmod 777 /root/.kind/cluster-setup.sh
-RUN chmod 777 /root/.kind/convert-kubeconfig.sh
+RUN chmod 777 entrypoint.sh
 
-# CMD ["bash"]
+ENTRYPOINT ["./entrypoint.sh"]

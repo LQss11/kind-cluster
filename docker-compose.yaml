@@ -1,15 +1,23 @@
 version: "3.8"
 services:
   cluster-generator:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - WORKDIR=${WORKDIR}
     image: cluster-generator 
     container_name: cluster-generator
     ports:
-      - 3000-3010:3000-3010
+      - ${PORT_RANGE}:${PORT_RANGE}
+      - ${PORTAINER_PORT}:${PORTAINER_PORT}
+      - ${APISERVER_PORT}:${APISERVER_PORT}
     volumes:
-      - .:/root/.kind
+      - .:${WORKDIR}
+      - ./config:/root/.kube/
     #   - /var/run/docker.sock:/var/run/docker.sock
     #   - /usr/bin/docker:/usr/bin/docker
-
     tty: true
     privileged: true
+    env_file:
+      - .env

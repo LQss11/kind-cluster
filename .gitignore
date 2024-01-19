@@ -1,2 +1,5 @@
 kind-config.yaml
 kindconfig
+config
+workspace
+**.log

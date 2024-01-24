@@ -5,7 +5,7 @@ To create a cluster you can either run the following script making sure you have
 ```sh
 docker compose up --build -d
 # Export kubeconfig to host
-docker cp cluster-generator:/root/.kube/config .
+docker cp cluster-generator:/root/.kube/config ./config
 # Export env vars (windows)
 $env:KUBECONFIG="$PWD/config/config"
 # Export env vars (linux)

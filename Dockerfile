@@ -9,7 +9,7 @@ RUN apk add bash curl wget iputils-ping net-tools kubectx helm
 
 WORKDIR /usr/local/bin
 # Download Kubernetes release
-ARG KUBERNETES_RELEASE=v1.21.1
+ARG KUBERNETES_RELEASE=v1.27.3
 RUN wget https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_RELEASE}/bin/linux/${ARCH}/kubectl -O kubectl\
     && chmod +x kubectl
 

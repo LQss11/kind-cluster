@@ -63,12 +63,12 @@ echo "$manager control-plane and $worker worker nodes will be joining the cluste
 echo "############################################################################"
 
 # Create the cluster
-kind create cluster --name k8s-cluster --config kind-config.yaml
+kind create cluster --name k8s-cluster2 --config kind-config.yaml
 
 # Update the k8s server api host+port depending on
 # haproxy loadbalancerr or single control-plane
 if [[ $manager == 1 ]]; then
-    kubectl config set clusters.kind-k8s-cluster.server https://k8s-cluster-control-plane:6443
+    kubectl config set clusters.kind-k8s-cluster2.server https://k8s-cluster2-control-plane:6443
 else
-    kubectl config set clusters.kind-k8s-cluster.server https://k8s-cluster-external-load-balancer:6443
+    kubectl config set clusters.kind-k8s-cluster2.server https://k8s-cluster2-external-load-balancer:6443
 fi

@@ -2,7 +2,7 @@
 FROM docker:dind
 ARG ARCH=amd64
 
-RUN apk add bash curl wget iputils-ping net-tools kubectx helm
+RUN apk add bash curl wget iputils-ping net-tools kubectx helm git go
 # RUN apt-get update && apt-get install -y  bash curl wget iputils-ping net-tools
 
 

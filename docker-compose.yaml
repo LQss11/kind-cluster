@@ -11,6 +11,7 @@ services:
     ports:
       - ${PORT_RANGE}:${PORT_RANGE}
       - ${PORTAINER_PORT}:${PORTAINER_PORT}
+      - ${HELM_DASHBOARD_PORT}:${HELM_DASHBOARD_PORT}
       - ${APISERVER_PORT}:${APISERVER_PORT}
     volumes:
       - .:${WORKDIR}

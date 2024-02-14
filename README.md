@@ -42,5 +42,16 @@ kubectl get all -n caretta
 kubectl port-forward --namespace caretta deploy/caretta-grafana 3000:3000 --address 0.0.0.0
 ```
 
+# Plugins
+In this example I have installed some kubectl plugins as well as some helm plugins:
+```sh
+# kubectl get pod PODNAME -o yaml | kubectl neat
+# kubectl access-matrix for deployment
+# kubectl node-shell k8s-cluster-worker
+kubectl krew info cost
+kubectl plugin list
+kubectl krew install permissions popeye	print-env
+```
+
 # More information
 [for more ](https://pkg.go.dev/sigs.k8s.io/kind/pkg/apis/config/v1alpha4)

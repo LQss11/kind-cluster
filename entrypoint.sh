@@ -179,12 +179,6 @@ if [ "$CLUSTER_BOOTSTRAP" -eq 1 ]; then
     create_kind_config
 fi
 
-log "Installing helm plugins..."
-
-helm plugin install https://github.com/komodorio/helm-dashboard
-helm plugin install https://github.com/nikhilsbhat/helm-drift
-helm plugin install https://github.com/databus23/helm-diff
-
 log "Starting helm dashboard..."
 helm dashboard --bind=0.0.0.0 --port=${HELM_DASHBOARD_PORT} &
 

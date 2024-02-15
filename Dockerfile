@@ -31,9 +31,17 @@ RUN set -x && \
 
 # Add Krew to the PATH
 ENV PATH="${PATH}:/root/.krew/bin"
-# Install kubernetes plugins
-RUN kubectl krew install access-matrix cost count dds deprecations doctor \
-example explore get-all images karmada neat node-shell ns open-svc permissions popeye
+
+# Install kubernetes plugins (https://krew.sigs.k8s.io/plugins/)
+RUN kubectl krew install karmada   
+# Plugins miscellaneous
+RUN kubectl krew install example explore cost neat skew view-serviceaccount-kubeconfig warp
+# Plugins for scanning stuff
+RUN kubectl krew install dds deprecations doctor popeye score starboard
+# Plugins for cluster resource management
+RUN kubectl krew install print-env grep images get-all count node-shell ns reap prune-unused resource-capacity resource-snapshot unlimited unused-volumes viewnode
+# Plugins for access management and rbac
+RUN kubectl krew install rbac-lookup rbac-tool access-matrix permissions rolesum
 
 # Install Helm plugins
 RUN helm plugin install https://github.com/komodorio/helm-dashboard && \

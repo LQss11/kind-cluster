@@ -182,6 +182,12 @@ fi
 log "Starting helm dashboard..."
 helm dashboard --bind=0.0.0.0 --port=${HELM_DASHBOARD_PORT} &
 
+log "Install helm chart nginx ingress as an example."
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install my-ingress-nginx ingress-nginx/ingress-nginx --version 4.9.1
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm upgrade --install -n ms --create-namespace metrics-server metrics-server/metrics-server --version 3.12.0 --set args[0]="--kubelet-insecure-tls"
+
 log "Script completed successfully."
 
 wait

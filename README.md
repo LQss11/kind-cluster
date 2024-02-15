@@ -45,12 +45,13 @@ kubectl port-forward --namespace caretta deploy/caretta-grafana 3000:3000 --addr
 # Plugins
 In this example I have installed some kubectl plugins as well as some helm plugins:
 ```sh
+# Visit: https://krew.sigs.k8s.io/plugins/
 # kubectl get pod PODNAME -o yaml | kubectl neat
 # kubectl access-matrix for deployment
 # kubectl node-shell k8s-cluster-worker
 kubectl krew info cost
 kubectl plugin list
-kubectl krew install permissions popeye	print-env
+kubectl krew install 
 ```
 
 # More information

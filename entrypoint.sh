@@ -140,8 +140,10 @@ fi
 log "Importing kubeconfig on dind."
 HOST=localhost
 cp /root/.kube/config /root/.kube/oldconfig
-sed -i "s#server:.*#server: https://$HOST:$APISERVER_PORT#g" /root/.kube/config
 
+# sed -i "s#server:.*#server: https://$HOST:$APISERVER_PORT#g" /root/.kube/config
+docker cp k8s-cluster-control-plane:/etc/kubernetes/admin.conf /root/.kube/config 
+sed -i "s#server:.*#server: https://$HOST:$APISERVER_PORT#g" /root/.kube/config
 }
 
 # Main script starts here

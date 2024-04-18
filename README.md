@@ -16,6 +16,10 @@ kubectl get nodes -o wide
 
 # Get cluster name 
 docker exec -it cluster-generator bash -c "kind get clusters"
+
+# In case cluster restarted (TODO: Fix check and reconfigure)
+docker exec -it cluster-generator bash -c "docker cp k8s-cluster-control-plane:/etc/kubernetes/admin.conf /root/.kube/config && sed -i 's#server:.*#server: https://localhost:6442#g' /root/.kube/config"
+
 ```
 
 # Deploy and access

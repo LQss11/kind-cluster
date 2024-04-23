@@ -33,13 +33,13 @@ RUN set -x && \
 ENV PATH="${PATH}:/root/.krew/bin"
 
 # Install kubernetes plugins (https://krew.sigs.k8s.io/plugins/)
-RUN kubectl krew install karmada vela
+RUN kubectl krew install karmada vela 
 # Plugins miscellaneous
-RUN kubectl krew install print-env example explore cost neat skew view-serviceaccount-kubeconfig warp
+RUN kubectl krew install print-env example explore cost neat skew view-serviceaccount-kubeconfig warp open-svc
 # Plugins for scanning stuff
 RUN kubectl krew install dds deprecations doctor popeye score starboard
 # Plugins for cluster resource management
-RUN kubectl krew install grep images get-all count node-shell ns reap prune-unused resource-capacity resource-snapshot resource-versions unlimited unused-volumes viewnode
+RUN kubectl krew install grep view-allocations nodegizmo images get-all count node-shell ns reap prune-unused resource-capacity resource-snapshot resource-versions unlimited unused-volumes viewnode
 # Plugins for access management and rbac
 RUN kubectl krew install rbac-lookup rbac-tool access-matrix permissions rolesum
 
